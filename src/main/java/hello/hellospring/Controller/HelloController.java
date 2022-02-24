@@ -15,19 +15,18 @@ public class HelloController {
     }
 
     @GetMapping("hello-mvc")
-    public String hellMvc(@RequestParam("name") String name, Model model){
+    public String hellMvc(@RequestParam(value="name", required = true) String name, Model model){
         model.addAttribute("name",name);
         return "hello-template2"; //리턴명이 hello-mvc 접속 페이지로 들어올때 보여줄 html 페이지를 의미한다. --view resolver가 매핑해준다.
     }
 
 
-    @GetMapping("hello-mvc2")
+    @GetMapping("hello-string")
     @ResponseBody
-    public String helloMvc2(@RequestParam("name2")String name2, Model model){
-
-        return "hello"+name2;
+    public String helloString(@RequestParam("name2")String name, Model model){
+        return "hello"+name;
     }
-    @GetMapping("hello-mvc3")
+    @GetMapping("hello-api")//흔히말하는 api가 이런식이다.
     @ResponseBody
     public Hello helloMvc3(@RequestParam("name3")String name2, Model model){
         Hello hello = new Hello();
@@ -37,10 +36,12 @@ public class HelloController {
     }
     static class Hello{
         private String name;
-        public String getName(){
+
+        public String getName() {
             return name;
         }
-        public void setName(String name){
+
+        public void setName(String name) {
             this.name = name;
         }
     }
